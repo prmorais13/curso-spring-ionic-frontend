@@ -1,7 +1,10 @@
-import { LocalUser } from './../models/local_user';
 import { Injectable } from "@angular/core";
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS  } from "@angular/common/http";
 import { Observable } from 'rxjs/RX';
+
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+
+import { LocalUser } from '../models/local_user';
 
 import { StorageService } from '../services/storage.service';
 
@@ -9,7 +12,8 @@ import { StorageService } from '../services/storage.service';
 export class ErrorInterceptor implements HttpInterceptor {
 
    constructor(
-      public storageService: StorageService
+      public storageService: StorageService,
+      public alertCtrl: AlertController
    ) {}
 
    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -29,9 +33,16 @@ export class ErrorInterceptor implements HttpInterceptor {
          console.log(errorObj);
 
          switch(errorObj.status) {
+            case 401:
+            this.handle401();
+            break;
+
             case 403:
             this.handle403();
             break;
+
+            default:
+            this.handleDefaultError(errorObj);
          }
 
          return Observable.throw(errorObj);
@@ -40,6 +51,34 @@ export class ErrorInterceptor implements HttpInterceptor {
 
    handle403() {
       this.storageService.setLocalUser(null);
+   }
+
+   handle401() {
+      let alert = this.alertCtrl.create({
+         title: 'Erro 401: Falha de autenticação',
+         message: 'Email ou senha incorretos!',
+         enableBackdropDismiss: false,
+         buttons: [
+            {
+               text: 'Ok'
+            }
+         ]
+      });
+      alert.present();
+   }
+
+   handleDefaultError(errorObj) {
+      let alert = this.alertCtrl.create({
+         title: `Erro ${errorObj.status}: ${errorObj.error}`,
+         message: errorObj.message,
+         enableBackdropDismiss: false,
+         buttons: [
+            {
+               text: 'Ok'
+            }
+         ]
+      });
+      alert.present();
    }
 
 };
