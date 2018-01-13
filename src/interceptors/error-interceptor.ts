@@ -4,8 +4,6 @@ import { Observable } from 'rxjs/RX';
 
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 
-import { LocalUser } from '../models/local_user';
-
 import { StorageService } from '../services/storage.service';
 
 @Injectable()

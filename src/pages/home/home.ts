@@ -36,15 +36,17 @@ export class HomePage {
           this.auth.successfulLogin(response.headers.get('Authorization'));
           this.navCtrl.setRoot('CategoriasPage');
         },
-        error => {});
+        error => {}
+      );
     }
 
   login() {
     this.auth.authenticate(this.creds)
-    .subscribe(response => {
-      this.auth.successfulLogin(response.headers.get('Authorization'));
-      this.navCtrl.setRoot('CategoriasPage');
-    },
-    error => {});
+      .subscribe(response => {
+        this.auth.successfulLogin(response.headers.get('Authorization'));
+        this.navCtrl.setRoot('CategoriasPage');
+      },
+      error => {}
+    );
   }
 }

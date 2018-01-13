@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs/RX';
 
 import { StorageService } from '../storage.service';
@@ -16,8 +16,6 @@ export class ClienteService {
    ) {}
 
    findByEmail(email: string): Observable<ClienteDTO> {
-
-      let token = this.storageService.getLocalUser().token;
          return this.http.get<ClienteDTO>(`${API_CONFIG.baseUrl}/clientes/email?email=${email}`);
    }
 
