@@ -23,4 +23,14 @@ export class ClienteService {
       let url = `${API_CONFIG.imgBaseUrl}/cp${id}.jpg`
       return url;
    }
+
+   inserir(cliente: ClienteDTO){
+         return this.http.post(
+				`${API_CONFIG.baseUrl}/clientes`,
+            cliente,
+            {
+               observe: 'response', responseType: 'text'
+         	}
+      	)
+   } 
 }
