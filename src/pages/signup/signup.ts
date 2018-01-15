@@ -30,14 +30,14 @@ export class SignupPage {
   ) { 
     this.formGroup = fb.group({
       nome: ['Paulo Roberto',
-            [Validators.required, Validators.min(5), Validators.max(120)]
+            [Validators.required, Validators.minLength(5), Validators.maxLength(120)]
       ],
       email: ['prmorais_13@hotmail.com', 
              [Validators.required, Validators.email]
       ],
       tipo: ['1', [Validators.required]],
       cpfOuCnpj: ['39135810491',
-                 [Validators.required, Validators.min(11), Validators.max(14)]],
+                 [Validators.required, Validators.minLength(11), Validators.maxLength(14)]],
       senha: ['Paulo13', [Validators.required]],
       logradouro: ['Rua Parque Paraúna', [Validators.required]],
       numero: ['79', [Validators.required]],
