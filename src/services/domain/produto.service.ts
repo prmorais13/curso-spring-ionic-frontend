@@ -12,6 +12,10 @@ export class ProdutoService {
       public http: HttpClient
    ) {}
 
+   findByCategoria(categoria_id: string) {
+      return this.http.get(`${API_CONFIG.baseUrl}/produtos?categorias=${categoria_id}`);
+   }
+
    getImageFromAssets(id: string): string {
       let url = `${API_CONFIG.imgBaseUrl}/prod${id}-small.jpg`
       return url;

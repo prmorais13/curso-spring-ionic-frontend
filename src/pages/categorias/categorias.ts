@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { CategoriaDTO } from '../../models/categoria.dto';
 import { CategoriaService } from '../../services/domain/categoria.service';
+import { ProdutoService } from '../../services/domain/produto.service';
+
+import { CategoriaDTO } from '../../models/categoria.dto';
 import { API_CONFIG } from '../../config/api.config';
 
 @IonicPage()
@@ -18,7 +20,8 @@ export class CategoriasPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public categoriaService: CategoriaService
+    public categoriaService: CategoriaService,
+    public produtoService: ProdutoService
   ) { }
 
   ionViewDidLoad() {
@@ -29,8 +32,8 @@ export class CategoriasPage {
       error => {});
   }
 
-  showProdutos() {
-    this.navCtrl.push('ProdutosPage');
+  showProdutos(categoria_id: string) {     
+      this.navCtrl.push('ProdutosPage', { categoria_id: categoria_id });
   }
 
 }

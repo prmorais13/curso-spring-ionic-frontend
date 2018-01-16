@@ -23,18 +23,12 @@ export class ProdutosPage {
   ) { }
 
   ionViewDidLoad() {
-    this.items = [
-      {
-        id: "1",
-        nome: "Mouse",
-        preco: 80.99
+    let categoria_id = this.navParams.get('categoria_id');
+    this.produtoService.findByCategoria(categoria_id)
+      .subscribe(response => {
+        this.items = response['content'];
       },
-      {
-        id: "2",
-        nome: "Teclado",
-        preco: 100.000
-      }
-    ]
+      error => {});
 
     // this.getImageExist();
   }
