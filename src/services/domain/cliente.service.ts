@@ -19,9 +19,9 @@ export class ClienteService {
          return this.http.get<ClienteDTO>(`${API_CONFIG.baseUrl}/clientes/email?email=${email}`);
    }
 
-   getImageFromAssets(id: string): string {
+   getImageFromAssets(id: string): Observable<any> {
       let url = `${API_CONFIG.imgBaseUrl}/cp${id}.jpg`
-      return url;
+      return this.http.get(url, {responseType: 'blob'});
    }
 
    inserir(cliente: ClienteDTO){

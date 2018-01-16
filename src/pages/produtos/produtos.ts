@@ -14,7 +14,6 @@ import { API_CONFIG } from '../../config/api.config';
 export class ProdutosPage {
 
   items: ProdutoDTO[];
-  imgUrl = API_CONFIG.imgBaseUrl;
 
   constructor(
     public navCtrl: NavController,
@@ -27,17 +26,19 @@ export class ProdutosPage {
     this.produtoService.findByCategoria(categoria_id)
       .subscribe(response => {
         this.items = response['content'];
+        this.getImageExist();
       },
       error => {});
-
-    // this.getImageExist();
   }
 
- /*  getImageExist() {
+  getImageExist() {
     for(let produto of this.items) {
-
+      this.produtoService.getImageFromAssets(produto.id)
+        .subscribe(response => {
+          produto.imagemUrl = `${API_CONFIG.imgBaseUrl}/prod${produto.id}-small.jpg`
+        },
+        error => {})
     }
-    return this.produto.imagemUrl = this.produtoService.getImageFromAssets(this.produto.id);
- } */
+  } 
 
 }

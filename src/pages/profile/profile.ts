@@ -5,6 +5,7 @@ import { StorageService } from '../../services/storage.service';
 import { ClienteService } from '../../services/domain/cliente.service';
 
 import { ClienteDTO } from '../../models/cliente.dto';
+import { API_CONFIG } from '../../config/api.config';
 
 @IonicPage()
 @Component({
@@ -43,7 +44,11 @@ export class ProfilePage {
   }
 
   getImageExist() {
-     return this.cliente.imagemUrl = this.clienteService.getImageFromAssets(this.cliente.id);
+    this.clienteService.getImageFromAssets(this.cliente.id)
+      .subscribe(response => {
+        this.cliente.imagemUrl = `${API_CONFIG.imgBaseUrl}/cp${this.cliente.id}.jpg`
+      },
+      error => {})
   }
 
 }

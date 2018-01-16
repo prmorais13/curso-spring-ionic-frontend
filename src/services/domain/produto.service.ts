@@ -16,9 +16,9 @@ export class ProdutoService {
       return this.http.get(`${API_CONFIG.baseUrl}/produtos?categorias=${categoria_id}`);
    }
 
-   getImageFromAssets(id: string): string {
+   getImageFromAssets(id: string): Observable<any> {
       let url = `${API_CONFIG.imgBaseUrl}/prod${id}-small.jpg`
-      return url;
+      return this.http.get(url, {responseType: 'blob'});
    }
 
    inserir(produto: ProdutoDTO){
