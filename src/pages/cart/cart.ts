@@ -64,8 +64,12 @@ export class CartPage {
       return "Iniciar compras";
     } 
     else {
-      return "Continuar comprando"
+      return "Continuar comprando";
     }
+  }
+
+  checkout() {
+    this.navCtrl.push('PickAddressPage');
   }
 
 }
