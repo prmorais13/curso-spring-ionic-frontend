@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { EnderecoDTO } from '../../models/endereco.dto';
 
+import { StorageService } from '../../services/storage.service';
+import { ClienteService } from '../../services/domain/cliente.service';
+
 @IonicPage()
 @Component({
   selector: 'page-pick-address',
@@ -14,44 +17,29 @@ export class PickAddressPage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public storageService: StorageService,
+    public clienteService: ClienteService
   ) { }
 
   ionViewDidLoad() {
-    this.enderecos = [
-      {
-        id: '1',
-        logradouro: 'Rua Parque Paraúna',
-        numero: '79',
-        complemento: '',
-        bairro: 'Nova Esperança',
-        cep: '59144170',
-        cidade: {
-          id: '1',
-          nome: 'Paranamirim',
-          estado: {
-            id: '2',
-            nome: 'Rio Grande do Norte'
+    let localUser = this.storageService.getLocalUser();
+    if (localUser && localUser.email) {
+      this.clienteService.findByEmail(localUser.email)
+        .subscribe(response => {
+          this.enderecos = response['enderecos'];
+          console.log(response);
+          
+        },
+        error => {
+          if (error.status == 403) {
+            this.navCtrl.setRoot('HomePage');
           }
-        }
-      },
-      {
-        id: '2',
-        logradouro: 'Rua Praia de Santa Rita',
-        numero: '13',
-        complemento: '',
-        bairro: 'Nova Parnamirim',
-        cep: '59144170',
-        cidade: {
-          id: '2',
-          nome: 'Natal',
-          estado: {
-            id: '2',
-            nome: 'Rio Grande do Norte'
-          }
-        }
-      }
-    ]
+        });
+    }
+    else {
+      this.navCtrl.setRoot('HomePage');
+    }
   }
 
 }
