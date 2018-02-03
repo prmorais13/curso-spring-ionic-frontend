@@ -12,8 +12,8 @@ export class ProdutoService {
       public http: HttpClient
    ) {}
 
-   findByCategoria(categoria_id: string) {
-      return this.http.get(`${API_CONFIG.baseUrl}/produtos?categorias=${categoria_id}`);
+   findByCategoria(categoria_id: string, page: number = 0, size: number = 24) {
+      return this.http.get(`${API_CONFIG.baseUrl}/produtos?categorias=${categoria_id}&page=${page}&size=${size}`);
    }
 
    findById(produto_id: string): Observable<ProdutoDTO> {
